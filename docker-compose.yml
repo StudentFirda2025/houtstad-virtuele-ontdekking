@@ -1,0 +1,66 @@
+networks: 
+    museumijlst-network:
+
+services:
+
+  # nginx
+  museumijlst-nginx-service:
+    image: nginx:stable-alpine
+    container_name: museumijlst-nginx-container
+    ports: 
+      - "8080:80"
+    volumes: 
+      - ./app/symfony:/var/www/project
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - museumijlst-php82-service 
+      - museumijlst-mysql8-service
+    networks:
+      - museumijlst-network  
+
+
+  # php
+  museumijlst-php82-service:
+    build:
+        context: .
+        dockerfile: ./php/Dockerfile
+    container_name: museumijlst-php82-container
+    ports: 
+      - "9000:9000"
+    volumes: 
+      - ./app/symfony:/var/www/project
+
+    networks: 
+      - museumijlst-network
+
+  # mysql
+  museumijlst-mysql8-service:
+    image: mysql:8
+    container_name: museumijlst-mysql8-container
+    ports:
+      - "3306:3306"
+    volumes: 
+      - ./mysql:/var/lib/mysql
+    networks:
+      - museumijlst-network
+    environment:
+        MYSQL_ROOT_PASSWORD: Y3Rw46Ns
+        MYSQL_DATABASE: museumijlst-db
+        MYSQL_USER: app
+        MYSQL_PASSWORD: Y3Rw46Ns
+
+ # --------------------- ONLY NEEDED FOR DEVELOPMENT ---------------------
+
+  museumijlst-ts-compiler-service:
+    image: node:latest
+    container_name: museumijlst-ts-compiler-container
+    ports: 
+      - "5173:5173"
+    volumes: 
+      - ./app:/var/www/project
+    working_dir: /var/www/project
+    networks:
+      - museumijlst-network
+    command: sleep infinity # keep docker container running
+
+

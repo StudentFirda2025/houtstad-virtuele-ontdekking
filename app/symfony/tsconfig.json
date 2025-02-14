@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        
+        "lib": [
+            "ES2017", // Add or modify this line
+            "DOM"
+        ],
+    }
+}
+  

@@ -1,0 +1,23 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+.ql-container {
+    background-color: #2e2e2e; /* Dark background */
+    color: white; /* Light text */
+}
+  
+.ql-editor {
+    background-color: white;
+    color: black;
+}
+
+.ql-toolbar {
+    background-color: white; /* Darker toolbar *///#868686
+    color: black;
+}
+
+.ql-toolbar .ql-picker {
+    color: white;
+}
+.ql-formats{
+    color: white;
+}
